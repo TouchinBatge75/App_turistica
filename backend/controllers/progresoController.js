@@ -1,29 +1,42 @@
 const db = require("../config/db");
 
 exports.actualizarProgreso = async (req, res) => {
+
     const id_tour = req.params.id;
     const { id_punto_actual, latitud_actual, longitud_actual } = req.body;
 
     try {
-        // Verificar si ya existe un progreso para este tour
-        const [rows] = await db.query("SELECT * FROM progreso_tour WHERE id_tour = ?", [id_tour]);
 
-        if(rows.length > 0){
-            await db.query(
-                "UPDATE progreso_tour SET id_punto_actual = ?, latitud_actual = ?, longitud_actual = ?, fecha_cambio = NOW() WHERE id_tour = ?",
-                [id_punto_actual, latitud_actual, longitud_actual, id_tour]
-            );
-        } else {
-            await db.query(
-                "INSERT INTO progreso_tour (id_tour, id_punto_actual, latitud_actual, longitud_actual, fecha_cambio) VALUES (?, ?, ?, ?, NOW())",
-                [id_tour, id_punto_actual, latitud_actual, longitud_actual]
-            );
-        }
+        const sql = `
+        INSERT INTO progreso_tour 
+        (id_tour, id_punto_actual, latitud_actual, longitud_actual, fecha_cambio)
+        VALUES (?, ?, ?, ?, NOW())
+        ON DUPLICATE KEY UPDATE
+        id_punto_actual = VALUES(id_punto_actual),
+        latitud_actual = VALUES(latitud_actual),
+        longitud_actual = VALUES(longitud_actual),
+        fecha_cambio = NOW()
+        `;
 
-        res.json({ mensaje: "Progreso del tour actualizado" });
+        const [result] = await db.query(sql, [
+            id_tour,
+            id_punto_actual,
+            latitud_actual,
+            longitud_actual
+        ]);
+
+        res.json({
+            mensaje: "Progreso actualizado correctamente"
+        });
 
     } catch (error) {
+
         console.error(error);
-        res.status(500).json({ error: "Error al actualizar progreso" });
+
+        res.status(500).json({
+            error: "Error al actualizar progreso"
+        });
+
     }
+
 };
