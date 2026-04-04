@@ -5,6 +5,7 @@ const authMiddleware = require("../middleware/authMiddleware"); // si aplica
 
 // actualizar progreso de un tour
 router.patch("/:id", authMiddleware, progresoController.actualizarProgreso);
+router.get("/:id", progresoController.obtenerProgreso);
 
 // exportar correctamente el router
 module.exports = router;
