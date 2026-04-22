@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Panel del Guía</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+    <h1>Panel del guía</h1>
+
+    <div id="info-guia"></div>
+
+    <div>
+        <label>ID del tour:</label>
+        <input type="number" id="idTour" value="5">
+    </div>
+
+    <hr>
+
+    <h2>Enviar aviso</h2>
+    <input type="text" id="mensajeAviso" placeholder="Escribe un aviso">
+    <button id="btnAviso">Enviar aviso</button>
+
+    <hr>
+
+    <h2>Actualizar progreso</h2>
+    <label>ID punto actual:</label>
+    <input type="number" id="idPuntoActual" value="1">
+
+    <label>Latitud:</label>
+    <input type="number" step="any" id="latitud" value="18.849747">
+
+    <label>Longitud:</label>
+    <input type="number" step="any" id="longitud" value="-97.105943">
+
+    <button id="btnActualizar">Actualizar progreso</button>
+
+    <hr>
+
+    <h2>Control del recorrido</h2>
+    <p id="puntoActualTexto">Punto actual: --</p>
+    <button id="btnSiguientePunto">Siguiente punto</button>
+
+    <p id="mensajePanel"></p>
+
+    <script src="js/panel.js"></script>
+</body>
+</html>

@@ -22,7 +22,9 @@ const app = express();
 // middlewares
 app.use(cors());
 app.use(express.json());
-app.use(express.static(path.join(__dirname, "../frontend/web-turista")));
+
+// servir frontend completo
+app.use(express.static(path.join(__dirname, "../frontend")));
 
 // puerto del servidor
 const PORT = process.env.PORT || 3000;

@@ -9,3 +9,8 @@ async function getProgreso(idTour) {
     const res = await fetch(`/api/progreso/${idTour}`);
     return await res.json();
 }
+
+async function getAvisos(idTour) {
+    const res = await fetch(`${API_URL}/avisos/${idTour}`);
+    return await res.json();
+}

@@ -2,6 +2,8 @@ let map;
 let marcadorGuia;
 let ruta;
 let posicionActual = null;
+let rutaGuia;
+let marcadores = [];
 
 // 🔵 ICONOS
 const iconoInicio = L.icon({
@@ -38,12 +40,17 @@ function agregarMarcador(punto, index, total) {
     if (index === 0) icono = iconoInicio;
     if (index === total - 1) icono = iconoFinal;
 
-    L.marker(
+    const marker = L.marker(
         [parseFloat(punto.latitud), parseFloat(punto.longitud)],
         { icon: icono }
     )
     .addTo(map)
     .bindPopup(`<b>${punto.nombre}</b>`);
+
+    marcadores.push({
+        id: punto.id_punto,
+        marker: marker
+    });
 }
 
 
@@ -89,6 +96,20 @@ function actualizarGuia(lat, lng) {
     posicionActual = nuevaPosicion;
 }
 
+function resaltarMarcador(idPuntoActual) {
+
+    marcadores.forEach(m => {
+        m.marker.setIcon(iconoNormal);
+    });
+
+    const actual = marcadores.find(m => m.id == idPuntoActual);
+
+    if (actual) {
+        actual.marker.setIcon(iconoInicio); // o crea uno amarillo
+        actual.marker.openPopup();
+    }
+}
+
 
 // 🎬 ANIMACIÓN SUAVE
 function animarMovimiento(origen, destino) {
@@ -118,4 +139,29 @@ function animarMovimiento(origen, destino) {
 
 function irAlGuia(lat, lng) {
     map.setView([lat, lng], 17, { animate: true });
+}
+
+function dibujarRutaAlGuia(lat1, lng1, lat2, lng2) {
+
+    const coords = [
+        [lat1, lng1], // turista
+        [lat2, lng2]  // guía
+    ];
+
+    if (rutaGuia) {
+        map.removeLayer(rutaGuia);
+    }
+
+    rutaGuia = L.polyline(coords, {
+        color: 'red',
+        weight: 4,
+        dashArray: '5, 10' // línea punteada
+    }).addTo(map);
+}
+
+function limpiarRutaAlGuia() {
+    if (rutaGuia) {
+        map.removeLayer(rutaGuia);
+        rutaGuia = null;
+    }
 }

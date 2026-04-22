@@ -9,23 +9,34 @@
 <body>
 
     <h1>🧭 Mi Tour</h1>
+
     <div id="alerta-distancia" class="alerta-oculta">
-        <span>⚠️ Te estás alejando del grupo</span>
+        <div>
+            <span>⚠️ Te estás alejando del grupo</span><br>
+            <small id="texto-distancia"></small>
+        </div>
         <button id="btn-ir-guia">Ver ubicación del guía</button>
     </div>
+
     <div id="info-tour"></div>
+
+    <div id="info-punto-actual">
+        <strong id="nombre-punto"></strong><br>
+        <small id="progreso-puntos"></small>
+    </div>
+
+    <div id="aviso-temporal" class="aviso-oculto"></div>
 
     <h2>📍 Puntos del recorrido</h2>
     <ul id="lista-puntos"></ul>
 
     <h2>🗺️ Mapa del recorrido</h2>
-<div id="map" style="height: 400px;"></div>
+    <div id="map" style="height: 400px;"></div>
 
     <script src="js/api.js"></script>
-    <script src="js/tour.js"></script>
-
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     <script src="js/mapa.js"></script>
+    <script src="js/tour.js"></script>
 
 </body>
-</html>s
+</html>
