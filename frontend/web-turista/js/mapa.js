@@ -115,3 +115,7 @@ function animarMovimiento(origen, destino) {
 
     }, 100);
 }
+
+function irAlGuia(lat, lng) {
+    map.setView([lat, lng], 17, { animate: true });
+}

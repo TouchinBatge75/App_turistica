@@ -1,9 +1,13 @@
 const params = new URLSearchParams(window.location.search);
 const idTour = params.get("id");
 
-let turistaLat = null;
-let turistaLng = null;
+
+let turistaLat = 18.849289;
+let turistaLng = -97.105461;
+
 let alertaActiva = false;
+let ultimaLatGuia = null;
+let ultimaLngGuia = null;
 
 if (!idTour) {
     document.body.innerHTML = "<h2>No se encontró el tour</h2>";
@@ -69,29 +73,28 @@ async function actualizarProgreso() {
         const latGuia = parseFloat(progreso.latitud_actual);
         const lngGuia = parseFloat(progreso.longitud_actual);
 
+        ultimaLatGuia = latGuia;
+        ultimaLngGuia = lngGuia;
+
         actualizarGuia(latGuia, lngGuia);
 
-        // 👇 NUEVO: comparar distancia
-        if (turistaLat && turistaLng) {
+        if (turistaLat !== null && turistaLng !== null) {
 
             const distancia = calcularDistancia(
                 turistaLat, turistaLng,
                 latGuia, lngGuia
             );
 
-            console.log("Distancia:", distancia);
+            console.log("Distancia (m):", distancia * 1000);
 
-            // 🔥 200 metros
-            if (distancia > 0.2 && !alertaActiva) {
+            if (distancia > 0.05 && !alertaActiva) {
                 alertaActiva = true;
-
-                alert("⚠️ Te estás alejando del grupo");
-
+                mostrarAlerta();
             }
 
-            // si vuelve a acercarse
-            if (distancia <= 0.2) {
+            if (distancia <= 0.05 && alertaActiva) {
                 alertaActiva = false;
+                ocultarAlerta();
             }
         }
     }
@@ -113,8 +116,26 @@ function calcularDistancia(lat1, lon1, lat2, lon2) {
 
     return R * c; // en km
 }
+function mostrarAlerta() {
+    const alerta = document.getElementById("alerta-distancia");
+    if (alerta) {
+        alerta.classList.remove("alerta-oculta");
+    }
+}
 
+function ocultarAlerta() {
+    const alerta = document.getElementById("alerta-distancia");
+    if (alerta) {
+        alerta.classList.add("alerta-oculta");
+    }
+}
+
+document.getElementById("btn-ir-guia").addEventListener("click", () => {
+    if (ultimaLatGuia !== null && ultimaLngGuia !== null) {
+        irAlGuia(ultimaLatGuia, ultimaLngGuia);
+    }
+});
+ 
 // cada 5 segundos
 setInterval(actualizarProgreso, 5000);
 
-obtenerUbicacionTurista();

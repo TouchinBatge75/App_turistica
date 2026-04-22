@@ -14,3 +14,33 @@ li {
     margin-bottom: 10px;
     border-radius: 8px;
 }
+
+#alerta-distancia {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    background: #fff3cd;
+    color: #664d03;
+    border: 1px solid #ffecb5;
+    padding: 12px 16px;
+    border-radius: 10px;
+    margin-bottom: 15px;
+}
+
+.alerta-oculta {
+    display: none !important;
+}
+
+#btn-ir-guia {
+    background: #0d6efd;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+#btn-ir-guia:hover {
+    opacity: 0.9;
+}
