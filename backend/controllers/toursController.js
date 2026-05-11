@@ -93,3 +93,35 @@ exports.obtenerPuntosTour = async (req, res) => {
     }
 
 };
+
+exports.obtenerTourPorId = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const [rows] = await db.query(`
+      SELECT 
+        t.id_tour,
+        t.nombre,
+        t.descripcion,
+        t.fecha,
+        t.hora,
+        t.estado,
+        t.codigo_qr,
+        g.nombre AS nombre_guia,
+        g.telefono
+      FROM tours t
+      INNER JOIN guias g ON t.id_guia = g.id_guia
+      WHERE t.id_tour = ?
+    `, [id]);
+
+    if (rows.length === 0) {
+      return res.status(404).json({ mensaje: 'Tour no encontrado' });
+    }
+
+    res.json(rows[0]);
+
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ mensaje: 'Error al obtener el tour' });
+  }
+};
