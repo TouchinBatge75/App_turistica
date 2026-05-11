@@ -2,36 +2,67 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tour Turístico</title>
-    <link rel="stylesheet" href="css/styles.css">
+
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
 
-    <h1>🧭 Mi Tour</h1>
-
-    <div id="alerta-distancia" class="alerta-oculta">
+    <header class="tour-header">
         <div>
-            <span>⚠️Hola yamileth</span><br>
-            <small id="texto-distancia"></small>
+            <h1>🧭 Tour en vivo</h1>
+            <p>Mantente conectado con tu grupo</p>
         </div>
-        <button id="btn-ir-guia">Ver ubicación del guía</button>
-    </div>
+    </header>
 
-    <div id="info-tour"></div>
-
-    <div id="info-punto-actual">
-        <strong id="nombre-punto"></strong><br>
-        <small id="progreso-puntos"></small>
-    </div>
-
+    <!-- Aviso temporal del guía -->
     <div id="aviso-temporal" class="aviso-oculto"></div>
 
-    <h2>📍 Puntos del recorrido</h2>
-    <ul id="lista-puntos"></ul>
+    <!-- Alerta de distancia -->
+    <div id="alerta-distancia" class="alerta-oculta">
+        <div>
+            <strong>⚠️ Te estás alejando del grupo</strong>
+            <small id="texto-distancia"></small>
+        </div>
+        <button id="btn-ir-guia">Reagruparme</button>
+    </div>
 
-    <h2>🗺️ Mapa del recorrido</h2>
-    <div id="map" style="height: 400px;"></div>
+    <main class="tour-layout">
+
+        <!-- Mapa protagonista -->
+        <section class="map-card">
+            <div id="map"></div>
+        </section>
+
+        <!-- Estado actual -->
+        <section class="card estado-card">
+            <span class="estado-badge">● En recorrido</span>
+
+            <h2 id="nombre-punto">📍 Punto actual</h2>
+            <p id="progreso-puntos">Esperando progreso...</p>
+
+            <div class="distancia-card">
+                <span id="texto-distancia-card">Guía en seguimiento</span>
+            </div>
+        </section>
+
+        <!-- Info del punto -->
+        <section class="card">
+            <h3>ℹ️ Sobre este lugar</h3>
+            <div id="info-lugar">
+                La información del punto aparecerá aquí cuando el guía avance en el recorrido.
+            </div>
+        </section>
+
+        <!-- Lista colapsable -->
+        <details class="card recorrido-card">
+            <summary>📋 Ver recorrido completo</summary>
+            <ul id="lista-puntos"></ul>
+        </details>
+
+    </main>
 
     <script src="js/api.js"></script>
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>

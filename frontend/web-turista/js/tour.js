@@ -80,14 +80,16 @@ async function actualizarProgreso() {
         // Mostrar punto actual
         const index = listaPuntos.findIndex(p => p.id_punto == idPuntoActual);
 
-        if (index !== -1) {
+      if (index !== -1) {
             const punto = listaPuntos[index];
 
             document.getElementById("nombre-punto").textContent =
-                `📍 Punto actual: ${punto.nombre}`;
+                `📍 ${punto.nombre}`;
 
             document.getElementById("progreso-puntos").textContent =
-                `${index + 1} de ${listaPuntos.length}`;
+                `Punto ${index + 1} de ${listaPuntos.length}`;
+
+            mostrarInfoLugar(punto);
         }
 
         // Limpiar resaltado de la lista
@@ -130,6 +132,22 @@ async function actualizarProgreso() {
             }
         }
     }
+}
+
+function mostrarInfoLugar(punto) {
+    const contenedor = document.getElementById("info-lugar");
+
+    if (!contenedor) return;
+
+    contenedor.innerHTML = `
+        <h4>${punto.nombre}</h4>
+        <p>${punto.descripcion || "Sin descripción disponible."}</p>
+
+        <div class="info-extra-lugar">
+            <span>📍 Coordenadas</span>
+            <small>${punto.latitud}, ${punto.longitud}</small>
+        </div>
+    `;
 }
 
 function calcularDistancia(lat1, lon1, lat2, lon2) {
