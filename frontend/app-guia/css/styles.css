@@ -1,27 +1,142 @@
-body {
-    font-family: Arial, sans-serif;
-    max-width: 700px;
-    margin: 30px auto;
-    padding: 20px;
-    background: #f5f5f5;
+* {
+    box-sizing: border-box;
 }
 
-input, button {
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f4f7fb;
+    color: #1f2937;
+}
+
+.panel-header {
+    background: linear-gradient(135deg, #111827, #2563eb);
+    color: white;
+    padding: 26px 20px 40px;
+    border-radius: 0 0 28px 28px;
+}
+
+.panel-header h1 {
+    margin: 0;
+    font-size: 26px;
+}
+
+.panel-header p {
+    margin: 6px 0 0;
+    opacity: 0.9;
+}
+
+.panel-layout {
+    margin-top: -22px;
+    padding-bottom: 30px;
+}
+
+.card {
+    background: white;
+    margin: 14px;
+    padding: 16px;
+    border-radius: 18px;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+}
+
+.card h2 {
+    margin-top: 0;
+    font-size: 20px;
+}
+
+label {
     display: block;
+    font-weight: bold;
+    margin-bottom: 6px;
+    color: #374151;
+}
+
+input,
+textarea {
     width: 100%;
-    margin-bottom: 10px;
-    padding: 10px;
-    border-radius: 8px;
-    border: 1px solid #ccc;
+    padding: 12px;
+    border-radius: 12px;
+    border: 1px solid #d1d5db;
+    margin-bottom: 12px;
+    font-size: 15px;
+}
+
+textarea {
+    min-height: 90px;
+    resize: vertical;
 }
 
 button {
+    width: 100%;
+    border: none;
     background: #0d6efd;
     color: white;
-    border: none;
+    padding: 13px 14px;
+    border-radius: 13px;
+    font-weight: bold;
     cursor: pointer;
+    font-size: 15px;
 }
 
 button:hover {
-    opacity: 0.9;
+    opacity: 0.92;
+}
+
+.btn-principal {
+    background: #198754;
+    font-size: 17px;
+    padding: 16px;
+}
+
+.punto-card {
+    border-left: 6px solid #198754;
+}
+
+.badge {
+    display: inline-block;
+    background: #198754;
+    color: white;
+    padding: 6px 11px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+#puntoActualTexto {
+    margin: 14px 0;
+    font-size: 21px;
+}
+
+.control-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+.control-grid button {
+    background: #374151;
+}
+
+.mensaje-panel {
+    margin: 14px;
+    padding: 12px;
+    border-radius: 12px;
+    background: #eef5ff;
+    color: #0d6efd;
+    font-weight: bold;
+}
+
+@media (max-width: 600px) {
+    .panel-header h1 {
+        font-size: 23px;
+    }
+
+    .card {
+        margin: 12px;
+    }
+
+    .control-grid {
+        grid-template-columns: 1fr;
+    }
 }

@@ -163,6 +163,47 @@ async function avanzarSiguientePunto() {
     }
 }
 
+async function moverGuia(deltaLat, deltaLng) {
+    const idTour = document.getElementById("idTour").value;
+
+    let lat = parseFloat(document.getElementById("latitud").value);
+    let lng = parseFloat(document.getElementById("longitud").value);
+
+    lat += deltaLat;
+    lng += deltaLng;
+
+    document.getElementById("latitud").value = lat.toFixed(6);
+    document.getElementById("longitud").value = lng.toFixed(6);
+
+    const idPuntoActual =
+        progresoActual?.id_punto_actual ||
+        document.getElementById("idPuntoActual").value;
+
+    try {
+        const res = await fetch(`http://localhost:3000/api/progreso/${idTour}`, {
+            method: "PATCH",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + token
+            },
+            body: JSON.stringify({
+                id_punto_actual: idPuntoActual,
+                latitud_actual: lat,
+                longitud_actual: lng
+            })
+        });
+
+        const data = await res.json();
+        mensajePanel.textContent = data.mensaje || data.error;
+
+        await cargarProgresoActual();
+
+    } catch (error) {
+        console.error(error);
+        mensajePanel.textContent = "Error al mover guía";
+    }
+}
+
 document.getElementById("btnSiguientePunto").addEventListener("click", avanzarSiguientePunto);
 
 

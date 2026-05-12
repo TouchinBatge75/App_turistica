@@ -2,47 +2,68 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Panel del Guía</title>
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
 
-    <h1>Panel del guía</h1>
+    <header class="panel-header">
+        <div>
+            <h1>🧭 Panel del guía</h1>
+            <p id="info-guia">Cargando guía...</p>
+        </div>
+    </header>
 
-    <div id="info-guia"></div>
+    <main class="panel-layout">
 
-    <div>
-        <label>ID del tour:</label>
-        <input type="number" id="idTour" value="5">
-    </div>
+        <section class="card">
+            <label for="idTour">ID del tour</label>
+            <input type="number" id="idTour" value="5">
+        </section>
 
-    <hr>
+        <section class="card punto-card">
+            <span class="badge">Recorrido activo</span>
+            <h2 id="puntoActualTexto">Punto actual: --</h2>
+            <button id="btnSiguientePunto" class="btn-principal">
+                Siguiente punto
+            </button>
+        </section>
 
-    <h2>Enviar aviso</h2>
-    <input type="text" id="mensajeAviso" placeholder="Escribe un aviso">
-    <button id="btnAviso">Enviar aviso</button>
+        <section class="card">
+            <h2>📢 Enviar aviso</h2>
+            <textarea id="mensajeAviso" placeholder="Ej. Nos reunimos en 10 minutos en el siguiente punto"></textarea>
+            <button id="btnAviso">Enviar aviso</button>
+        </section>
 
-    <hr>
+        <section class="card">
+            <h2>📍 Actualizar ubicación manual</h2>
 
-    <h2>Actualizar progreso</h2>
-    <label>ID punto actual:</label>
-    <input type="number" id="idPuntoActual" value="1">
+            <label for="idPuntoActual">ID punto actual</label>
+            <input type="number" id="idPuntoActual" value="1">
 
-    <label>Latitud:</label>
-    <input type="number" step="any" id="latitud" value="18.849747">
+            <label for="latitud">Latitud</label>
+            <input type="number" step="any" id="latitud" value="18.849747">
 
-    <label>Longitud:</label>
-    <input type="number" step="any" id="longitud" value="-97.105943">
+            <label for="longitud">Longitud</label>
+            <input type="number" step="any" id="longitud" value="-97.105943">
 
-    <button id="btnActualizar">Actualizar progreso</button>
+            <button id="btnActualizar">Actualizar progreso</button>
+        </section>
 
-    <hr>
+        <section class="card">
+            <h2>🧪 Movimiento de prueba</h2>
+            <div class="control-grid">
+                <button onclick="moverGuia(0.0005, 0)">⬆ Norte</button>
+                <button onclick="moverGuia(0, -0.0005)">⬅ Oeste</button>
+                <button onclick="moverGuia(0, 0.0005)">➡ Este</button>
+                <button onclick="moverGuia(-0.0005, 0)">⬇ Sur</button>
+            </div>
+        </section>
 
-    <h2>Control del recorrido</h2>
-    <p id="puntoActualTexto">Punto actual: --</p>
-    <button id="btnSiguientePunto">Siguiente punto</button>
+        <p id="mensajePanel" class="mensaje-panel"></p>
 
-    <p id="mensajePanel"></p>
+    </main>
 
     <script src="js/panel.js"></script>
 </body>
