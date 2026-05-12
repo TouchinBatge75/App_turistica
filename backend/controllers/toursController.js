@@ -125,3 +125,34 @@ exports.obtenerTourPorId = async (req, res) => {
     res.status(500).json({ mensaje: 'Error al obtener el tour' });
   }
 };
+
+exports.actualizarEstadoTour = async (req, res) => {
+    const id_tour = req.params.id;
+    const { estado } = req.body;
+
+    const estadosValidos = ["pendiente", "en_recorrido", "finalizado"];
+
+    if (!estadosValidos.includes(estado)) {
+        return res.status(400).json({
+            error: "Estado de tour no válido"
+        });
+    }
+
+    try {
+        await db.query(
+            "UPDATE tours SET estado = ? WHERE id_tour = ?",
+            [estado, id_tour]
+        );
+
+        res.json({
+            mensaje: "Estado del tour actualizado",
+            estado
+        });
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({
+            error: "Error al actualizar estado del tour"
+        });
+    }
+};

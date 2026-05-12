@@ -13,4 +13,6 @@ router.get('/:id', toursController.obtenerTourPorId);
 // Obtener puntos del tour
 router.get("/:id/puntos", toursController.obtenerPuntosTour);
 
+router.patch("/:id/estado", authMiddleware, toursController.actualizarEstadoTour);
+
 module.exports = router;

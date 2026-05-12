@@ -22,6 +22,19 @@
             <input type="number" id="idTour" value="5">
         </section>
 
+        <section class="card">
+            <h2>🔗 Enlace del turista</h2>
+
+            <p class="texto-ayuda">
+                Comparte este enlace o QR para que los turistas entren al recorrido.
+            </p>
+
+            <input type="text" id="linkTurista" readonly>
+
+            <button id="btnCopiarLink">Copiar enlace</button>
+
+            <div id="qrPanel" class="qr-panel"></div>
+        </section>
         <section class="card punto-card">
             <span class="badge">Recorrido activo</span>
             <h2 id="puntoActualTexto">Punto actual: --</h2>
@@ -60,11 +73,20 @@
                 <button onclick="moverGuia(-0.0005, 0)">⬇ Sur</button>
             </div>
         </section>
+        <section class="card">
+            <h2>🚦 Estado del tour</h2>
+
+            <p id="estadoTourTexto">Estado: --</p>
+
+            <button id="btnIniciarTour" class="btn-principal">Iniciar tour</button>
+            <button id="btnFinalizarTour" class="btn-peligro">Finalizar tour</button>
+        </section>
 
         <p id="mensajePanel" class="mensaje-panel"></p>
 
     </main>
 
+    <script src="https://cdn.jsdelivr.net/npm/qrcodejs/qrcode.min.js"></script>
     <script src="js/panel.js"></script>
 </body>
 </html>

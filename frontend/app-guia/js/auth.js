@@ -1,6 +1,13 @@
 // Verificar que el DOM cargó
 document.addEventListener("DOMContentLoaded", () => {
 
+    const token = localStorage.getItem("token");
+
+    if (token) {
+        window.location.href = "/app-guia/crear-tour.html";
+        return;
+    }
+
     const form = document.getElementById("login-form");
     const mensaje = document.getElementById("mensaje");
 
@@ -44,7 +51,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 console.log("Login exitoso, redirigiendo...");
 
                 // 🔥 IMPORTANTE: usa ruta absoluta
-                window.location.href = "/app-guia/panel.html";
+                window.location.href = "/app-guia/crear-tour.html";
 
             } else {
                 mensaje.textContent = data.error || "No se pudo iniciar sesión";

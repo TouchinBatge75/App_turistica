@@ -2,8 +2,12 @@ const token = localStorage.getItem("token");
 const guia = JSON.parse(localStorage.getItem("guia"));
 const mensajePanel = document.getElementById("mensajePanel");
 
+const params = new URLSearchParams(window.location.search);
+const idTourURL = params.get("id_tour");
+
 let puntosTour = [];
 let progresoActual = null;
+let qrGenerado = null;
 
 if (!token) {
     window.location.href = "login.html";
@@ -162,6 +166,41 @@ async function avanzarSiguientePunto() {
         mensajePanel.textContent = "Error al avanzar al siguiente punto";
     }
 }
+async function cambiarEstadoTour(estado) {
+    const idTour = document.getElementById("idTour").value;
+
+    try {
+        const res = await fetch(`http://localhost:3000/api/tours/${idTour}/estado`, {
+            method: "PATCH",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + token
+            },
+            body: JSON.stringify({ estado })
+        });
+
+        const data = await res.json();
+
+        mensajePanel.textContent = data.mensaje || data.error;
+
+        if (data.estado) {
+            document.getElementById("estadoTourTexto").textContent =
+                `Estado: ${data.estado}`;
+        }
+
+    } catch (error) {
+        console.error(error);
+        mensajePanel.textContent = "Error al cambiar estado del tour";
+    }
+}
+
+document.getElementById("btnIniciarTour").addEventListener("click", () => {
+    cambiarEstadoTour("en_recorrido");
+});
+
+document.getElementById("btnFinalizarTour").addEventListener("click", () => {
+    cambiarEstadoTour("finalizado");
+});
 
 async function moverGuia(deltaLat, deltaLng) {
     const idTour = document.getElementById("idTour").value;
@@ -203,16 +242,53 @@ async function moverGuia(deltaLat, deltaLng) {
         mensajePanel.textContent = "Error al mover guía";
     }
 }
+function actualizarLinkTurista() {
+    const idTour = document.getElementById("idTour").value;
+
+    const link = `${window.location.origin}/web-turista/tour.html?id=${idTour}`;
+
+    const input = document.getElementById("linkTurista");
+    const qrPanel = document.getElementById("qrPanel");
+
+    input.value = link;
+
+    qrPanel.innerHTML = "";
+
+    qrGenerado = new QRCode(qrPanel, {
+        text: link,
+        width: 180,
+        height: 180
+    });
+}
 
 document.getElementById("btnSiguientePunto").addEventListener("click", avanzarSiguientePunto);
 
+document.getElementById("btnCopiarLink").addEventListener("click", async () => {
+    const link = document.getElementById("linkTurista").value;
+
+    try {
+        await navigator.clipboard.writeText(link);
+        mensajePanel.textContent = "Enlace copiado";
+    } catch (error) {
+        console.error(error);
+        mensajePanel.textContent = "No se pudo copiar el enlace";
+    }
+});
 
 document.getElementById("idTour").addEventListener("change", async () => {
+    actualizarLinkTurista();
     await cargarPuntosTour();
     await cargarProgresoActual();
 });
 
 (async function iniciarPanel() {
+
+    if (idTourURL) {
+        document.getElementById("idTour").value = idTourURL;
+    }
+
+    actualizarLinkTurista();
     await cargarPuntosTour();
     await cargarProgresoActual();
+
 })();
